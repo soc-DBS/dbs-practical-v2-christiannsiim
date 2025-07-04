@@ -1,8 +1,16 @@
 const { query } = require('../database');
 const { SQL_ERROR_CODE, UNIQUE_VIOLATION_ERROR, RAISE_EXCEPTION } = require('../errors');
 
+// module.exports.retrieveAll = function retrieveAll() {
+//     const sql = `SELECT adm_no, stud_name, gender, crse_code FROM student`;
+//     return query(sql).then(function (result) {
+//         return result.rows;
+//     });
+// };
+
+// Modify the existing application query to include the gpa attribute
 module.exports.retrieveAll = function retrieveAll() {
-    const sql = `SELECT adm_no, stud_name, gender, crse_code FROM student`;
+    const sql = `SELECT adm_no, stud_name, gender, crse_code, gpa, gpa_last_updated FROM student`;
     return query(sql).then(function (result) {
         return result.rows;
     });

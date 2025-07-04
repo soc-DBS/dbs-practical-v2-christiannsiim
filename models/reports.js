@@ -1,5 +1,6 @@
 const { query } = require('../database');
 
+// the SELECT keyword is used to invoke the user defined database function.
 module.exports.generateModulesPerformance = function generateModulesPerformance() {
     const sql = 'SELECT * FROM get_modules_performance()';
     return query(sql)
