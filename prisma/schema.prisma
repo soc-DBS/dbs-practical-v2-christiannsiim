@@ -81,3 +81,10 @@ model userRole {
 
   @@map("user_role")
 }
+
+model module {
+  modCode String @id @map("mod_code") @db.VarChar(10) //Change this field’s type
+  modName String @map("mod_name") @db.VarChar(100)
+  creditUnit Int @map("credit_unit")
+  modCoord String? @map("mod_coord") @db.Char(4) //Add this field
+}
