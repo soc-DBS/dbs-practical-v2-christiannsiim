@@ -88,3 +88,11 @@ model module {
   creditUnit Int @map("credit_unit")
   modCoord String? @map("mod_coord") @db.Char(4) //Add this field
 }
+
+model staff_dependent {
+  staffNo String @map("staff_no") @db.Char(4)
+  dependentName String @map("dependent_name") @db.VarChar(30)
+  relationship String @map("relationship") @db.VarChar(20)
+
+  @@id([staffNo, dependentName])
+}
