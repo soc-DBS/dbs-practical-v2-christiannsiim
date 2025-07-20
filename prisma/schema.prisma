@@ -109,3 +109,15 @@ model country {
   language String @map("language") @db.VarChar(30)
   region String @map("region") @db.VarChar(30)
 }
+
+model student {
+  admNo       String   @id @map("adm_no") @db.Char(4)
+  studName    String   @map("stud_name") @db.VarChar(30)
+  gender      String   @map("gender") @db.Char(1)
+  address     String   @map("address") @db.VarChar(100)
+  mobilePhone String   @map("mobile_phone") @db.Char(8)
+  homePhone   String   @map("home_phone") @db.Char(8)
+  dob         DateTime @map("dob") @db.Date
+  nationality String   @map("nationality") @db.VarChar(30)
+  crseCode    String   @map("crse_code") @db.VarChar(5)
+}
