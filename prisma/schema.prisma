@@ -24,6 +24,9 @@ model department {
   budget           Decimal?  @db.Decimal(9, 2)
   expenditure      Decimal?  @db.Decimal(9, 2)
   hodApptDate      DateTime? @map("hod_appt_date") @db.Date
+
+  departmentHodToStaff staff @relation("departmentHodToStaff", fields: [hod], references: [staffNo], onDelete: NoAction, onUpdate: NoAction, map: "dept_hod_fk")
+  staffDeptCodeToDepartment staff[] @relation("staffDeptCodeToDepartment")
 }
 
 model staff {
@@ -44,6 +47,8 @@ model staff {
   highestQln        String   @map("highest_qln") @db.VarChar(10)
   designation       String   @db.VarChar(20)
 
+  departmentHodTostaff department[] @relation("departmentHodToStaff")
+  staffDeptCodeToDepartment department @relation("staffDeptCodeToDepartment", fields: [deptCode], references: [deptCode], onDelete: NoAction, onUpdate: NoAction, map: "staff_dept_code_fk")
   staffDependent staffDependent[]
 }
 
