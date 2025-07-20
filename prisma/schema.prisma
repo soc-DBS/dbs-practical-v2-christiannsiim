@@ -103,3 +103,9 @@ model pre_requisite {
 
   @@id([modCode, requisite])
 }
+
+model country {
+  countryName String @id @map("country_name") @db.VarChar(30)
+  language String @map("language") @db.VarChar(30)
+  region String @map("region") @db.VarChar(30)
+}
