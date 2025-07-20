@@ -43,6 +43,8 @@ model staff {
   typeOfEmployment  String   @map("type_of_employment") @db.VarChar(2)
   highestQln        String   @map("highest_qln") @db.VarChar(10)
   designation       String   @db.VarChar(20)
+
+  staffDependent staffDependent[]
 }
 
 model staffBackup {
@@ -89,19 +91,23 @@ model module {
   modCoord String? @map("mod_coord") @db.Char(4) //Add this field
 }
 
-model staff_dependent {
-  staffNo String @map("staff_no") @db.Char(4)
+model staffDependent {
+  staffNo       String @map("staff_no") @db.Char(4)
   dependentName String @map("dependent_name") @db.VarChar(30)
-  relationship String @map("relationship") @db.VarChar(20)
-
+  relationship  String @map("relationship") @db.VarChar(20)
+  
+  staff staff @relation(fields: [staffNo], references: [staffNo], onDelete: NoAction, onUpdate: NoAction, map: "staff_dependent_staff_no_fk")
+  
   @@id([staffNo, dependentName])
+  @@map("staff_dependent")  // This keeps the database table name unchanged
 }
 
-model pre_requisite {
-  modCode String @map("mod_code") @db.VarChar(10)
+model PreRequisite {
+  modCode   String @map("mod_code") @db.VarChar(10)
   requisite String @map("requisite") @db.VarChar(10)
-
+  
   @@id([modCode, requisite])
+  @@map("pre_requisite")  // This keeps the database table name unchanged
 }
 
 model country {
@@ -122,11 +128,12 @@ model student {
   crseCode    String   @map("crse_code") @db.VarChar(5)
 }
 
-model stud_mod_performance {
+model StudModPerformance {
   admNo         String @map("adm_no") @db.Char(4)
   modRegistered String @map("mod_registered") @db.VarChar(10)
   mark          Int    @map("mark")
   grade         String @map("grade") @db.Char(2)
   
   @@id([admNo, modRegistered])
+  @@map("stud_mod_performance")  // This keeps the database table name unchanged
 }
