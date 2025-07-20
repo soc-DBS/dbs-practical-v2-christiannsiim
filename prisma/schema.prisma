@@ -96,3 +96,10 @@ model staff_dependent {
 
   @@id([staffNo, dependentName])
 }
+
+model pre_requisite {
+  modCode String @map("mod_code") @db.VarChar(10)
+  requisite String @map("requisite") @db.VarChar(10)
+
+  @@id([modCode, requisite])
+}
