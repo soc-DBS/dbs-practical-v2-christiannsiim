@@ -101,9 +101,9 @@ model module {
   creditUnit Int @map("credit_unit")
   modCoord String? @map("mod_coord") @db.Char(4) //Add this field
 
-  // // Two back-references for PreRequisite
-  // preRequisiteModCodeToModule PreRequisite[] @relation("preRequisiteModCodeToModule")
-  // preRequisiteRequisiteToModule PreRequisite[] @relation("preRequisiteRequisiteToModule")
+  // Two back-references for PreRequisite
+  preRequisiteModCodeToModule PreRequisite[] @relation("preRequisiteModCodeToModule")
+  preRequisiteRequisiteToModule PreRequisite[] @relation("preRequisiteRequisiteToModule")
 }
 
 model staffDependent {
@@ -121,9 +121,9 @@ model PreRequisite {
   modCode   String @map("mod_code") @db.VarChar(10)
   requisite String @map("requisite") @db.VarChar(10)
   
-  // // Two relations to module table
-  // moduleByModCode module @relation("preRequisiteModCodeToModule", fields: [modCode], references: [modCode], onDelete: NoAction, onUpdate: NoAction, map: "pre_requisite_mod_code_fk")
-  // moduleByRequisite module @relation("preRequisiteRequisiteToModule", fields: [requisite], references: [modCode], onDelete: NoAction, onUpdate: NoAction, map: "pre_requisite_requisite_fk")
+  // Two relations to module table
+  moduleByModCode module @relation("preRequisiteModCodeToModule", fields: [modCode], references: [modCode], onDelete: NoAction, onUpdate: NoAction, map: "pre_requisite_mod_code_fk")
+  moduleByRequisite module @relation("preRequisiteRequisiteToModule", fields: [requisite], references: [modCode], onDelete: NoAction, onUpdate: NoAction, map: "pre_requisite_requisite_fk")
   
   @@id([modCode, requisite])
   @@map("pre_requisite")  // This keeps the database table name unchanged
