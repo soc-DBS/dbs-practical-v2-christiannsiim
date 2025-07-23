@@ -57,6 +57,7 @@ model staff {
   departmentHodTostaff department[] @relation("departmentHodToStaff")
   staffDeptCodeToDepartment department @relation("staffDeptCodeToDepartment", fields: [deptCode], references: [deptCode], onDelete: NoAction, onUpdate: NoAction, map: "staff_dept_code_fk")
   staffDependent staffDependent[]
+  coordinatedModules module[]
 }
 
 model staffBackup {
@@ -102,6 +103,7 @@ model module {
   creditUnit Int @map("credit_unit")
   modCoord String? @map("mod_coord") @db.Char(4) //Add this field
 
+  coordinator staff? @relation(fields: [modCoord], references: [staffNo], onDelete: NoAction, onUpdate: NoAction, map: "mod_mod_coord_fk")
   // Two back-references for PreRequisite
   preRequisiteModCodeToModule PreRequisite[] @relation("preRequisiteModCodeToModule")
   preRequisiteRequisiteToModule PreRequisite[] @relation("preRequisiteRequisiteToModule")
