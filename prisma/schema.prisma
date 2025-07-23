@@ -16,6 +16,7 @@ model course {
 
   // relation to department
   department department @relation(fields: [offeredBy], references: [deptCode], onDelete: NoAction, onUpdate: NoAction, map: "fk_course_offered_by")
+  student student[] // Back-reference to students enrolled in this course
 }
 
 model department {
@@ -133,6 +134,8 @@ model country {
   countryName String @id @map("country_name") @db.VarChar(30)
   language String @map("language") @db.VarChar(30)
   region String @map("region") @db.VarChar(30)
+
+  student student[] // Back-reference to students from this country
 }
 
 model student {
@@ -145,6 +148,9 @@ model student {
   dob         DateTime @map("dob") @db.Date
   nationality String   @map("nationality") @db.VarChar(30)
   crseCode    String   @map("crse_code") @db.VarChar(5)
+
+  course course @relation(fields: [crseCode], references: [crseCode], onDelete: NoAction, onUpdate: NoAction, map: "student_crse_code_fk")
+  country country @relation(fields: [nationality], references: [countryName], onDelete: NoAction, onUpdate: NoAction, map: "student_nationality_fk")
 }
 
 model StudModPerformance {
