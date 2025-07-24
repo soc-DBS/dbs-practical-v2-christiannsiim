@@ -66,22 +66,22 @@ module.exports.deleteByCode = function deleteByCode(code) {
         });
 };
 
-// existing updateModule function
-// module.exports.updateByCode = function updateByCode(code, credit) {
-//     // Note:
-//     // If using raw sql: Can use result.rowCount to check the number of rows affected
-//     // But if using function/stored procedure, result.rowCount will always return null
-//     const sql = `UPDATE module SET credit_unit = $1 WHERE mod_code = $2`;
-//     return query(sql, [credit, code]).then(function (result) {
-//         const rows = result.rowCount;
+existing updateModule function
+module.exports.updateByCode = function updateByCode(code, credit) {
+    // Note:
+    // If using raw sql: Can use result.rowCount to check the number of rows affected
+    // But if using function/stored procedure, result.rowCount will always return null
+    const sql = `UPDATE module SET credit_unit = $1 WHERE mod_code = $2`;
+    return query(sql, [credit, code]).then(function (result) {
+        const rows = result.rowCount;
 
-//         if (rows === 0) {
-//             // Note: result.rowCount returns the number of rows processed instead of returned
-//             // Read more: https://node-postgres.com/apis/result#resultrowcount-int--null
-//             throw new EMPTY_RESULT_ERROR(`Module ${code} not found!`);
-//         }
-//     })
-// };
+        if (rows === 0) {
+            // Note: result.rowCount returns the number of rows processed instead of returned
+            // Read more: https://node-postgres.com/apis/result#resultrowcount-int--null
+            throw new EMPTY_RESULT_ERROR(`Module ${code} not found!`);
+        }
+    })
+};
 
 // Updated updateByCode function to use stored procedure
 module.exports.updateByCode = function updateByCode(code, credit) {

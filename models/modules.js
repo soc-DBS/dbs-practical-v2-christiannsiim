@@ -39,4 +39,30 @@ module.exports.create = function create(code, name, credit) {
     });
 };
 
+// UPDATE operation
+module.exports.updateByCode = function updateByCode(code, credit) {
+    return prisma.module.update({
+        //TODO: Add where and data
+        where: {
+            modCode: code  // Find module by its code (primary key)
+        },
+        data: {
+            creditUnit: parseInt(credit)  // Update the credit unit, convert string to int
+        }
+    }).then(function (module) {
+        // Leave blank
+    }).catch(function (error) {
+        // Prisma error codes: https://www.prisma.io/docs/orm/reference/error-reference#p2025
+        // TODO: Handle Prisma Error, throw a new error if module is not found
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            if (error.code === 'P2025') {
+                // P2025 = Record not found
+                throw new Error(`Module ${code} not found`);
+            }
+        }
+        // Re-throw any other errors
+        throw error;
+    });
+};
+
 // TODO: Add other CRUD operations (Update, Delete, Retrieve) here later
