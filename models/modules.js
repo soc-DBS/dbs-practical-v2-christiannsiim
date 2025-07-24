@@ -65,4 +65,26 @@ module.exports.updateByCode = function updateByCode(code, credit) {
     });
 };
 
+// DELETE operation
+module.exports.deleteByCode = function deleteByCode(code) {
+    return prisma.module.delete({
+    //TODO: Add where
+    where: {
+        modCode: code
+    }
+    }).then(function (module) {
+    // Leave blank
+    }).catch(function (error) {
+    // Prisma error codes: https://www.prisma.io/docs/orm/reference/error-reference#p2025
+    // TODO: Handle Prisma Error, throw a new error if module is not found
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2025') {
+            throw new Error(`Module ${code} not found`);
+        }
+    }
+    // Re-throw any other errors
+    throw error;
+    })
+};
+
 // TODO: Add other CRUD operations (Update, Delete, Retrieve) here later
