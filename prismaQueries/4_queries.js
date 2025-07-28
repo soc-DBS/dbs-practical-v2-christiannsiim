@@ -24,21 +24,32 @@ function getHodInfo() {
 function getDeptStaffingInfo() {
 	return prisma.department.findMany({
 		//TODO: Implement the query
-		orderBy: [
-			{
-				deptCode: 'desc'
-			},
-			{
-				noOfStaff: 'desc'
-			}
-		],
-		select: {
-			deptCode: true,
-			noOfStaff: true
-		}
+        select: {
+            deptCode: true,
+            noOfStaff: true
+        },
+        orderBy: [
+            {
+                noOfStaff: 'desc'
+            },
+            {
+                deptCode: 'desc'
+            }
+        ]
 	});
 }
 
+function getCitizenshipWithoutDuplicates() {
+    return prisma.staff.findMany({
+        select: {
+            citizenship: true
+        },
+        distinct: ['citizenship'],
+        orderBy: {
+            citizenship: 'desc'
+        }
+    });
+}
 
 /** Section B: Filtering Queries */
 function getStaffofSpecificCitizenships() {
@@ -63,7 +74,6 @@ function getStaffofSpecificCitizenships() {
         ]
     });
 }
- 
 
 function getStaffByCriteria1() {
     return prisma.staff.findMany({
@@ -197,6 +207,9 @@ async function main(argument) {
 			break;
 		case 'getDeptStaffingInfo':
 			results = await getDeptStaffingInfo();
+			break;
+		case 'getCitizenshipWithoutDuplicates':
+			results = await getCitizenshipWithoutDuplicates();
 			break;
 		case 'getStaffofSpecificCitizenships':
 			results = await getStaffofSpecificCitizenships();
