@@ -41,21 +41,63 @@ function getDeptStaffingInfo() {
 
 
 /** Section B: Filtering Queries */
-
-
 function getStaffofSpecificCitizenships() {
-	return prisma.staff.findMany({
+    return prisma.staff.findMany({
 		//TODO: Implement the query
-
-	});
+        select: {
+            citizenship: true,
+            staffName: true
+        },
+        where: {
+            citizenship: {
+                in: ['Korea', 'Malaysia', 'Thailand', 'Hong Kong']
+            }
+        },
+        orderBy: [
+            {
+                citizenship: 'asc'
+            },
+            {
+                staffName: 'asc'
+            }
+        ]
+    });
 }
-
+ 
 
 function getStaffByCriteria1() {
-	return prisma.staff.findMany({
-		//TODO: Implement the query
-
-	});
+    return prisma.staff.findMany({
+		//TODO: Implement the query		
+        select: {
+            gender: true,
+            pay: true,
+            maritalStatus: true,
+            staffName: true
+        },
+        where: {
+            maritalStatus: {
+                equals: 'M'
+            },
+            OR: [
+                {
+                    gender: 'F',
+                    pay: { gte: 4000, lte: 7000 }
+                },
+                {
+                    gender: 'M',
+                    pay: { gte: 2000, lte: 6000 }
+                }
+            ]
+        },
+        orderBy: [
+            {
+                gender: 'asc'
+            },
+            {
+                pay: 'asc'
+            }
+        ]
+    });
 }
 
 
