@@ -106,7 +106,19 @@ function getStaffByCriteria1() {
 async function getDepartmentCourses() {
     return prisma.department.findMany({
 		//TODO: Implement the query
-		
+        select: {
+            deptName: true,
+            course: {
+                select: {
+                    crseName: true,
+                    crseFee: true,
+                    labFee: true
+                }
+            }
+        },
+        orderBy: {
+            deptName: 'asc'
+        }
     })
 }
 
@@ -114,14 +126,63 @@ async function getDepartmentCourses() {
 const getStaffAndDependents = () => {
     return prisma.staff.findMany({
 		//TODO: Implement the query
-
+		select: {
+			staffName: true,
+			staffDependent: {
+				select: {
+					dependentName: true,
+					relationship: true
+				}
+			}
+		},
+		where: {
+			staffDependent: {
+				some: {}
+			}
+		},
+		orderBy: {
+			staffName: 'asc'
+		}
     });
 };
 
 const getDepartmentCourseStudentDob = () => {
     return prisma.department.findMany({
 		//TODO: Implement the query
-		
+        select: {
+            deptName: true,
+            course: {
+                select: {
+                    crseName: true,
+                    student: {
+                        select: {
+                            studName: true,
+                            dob: true,
+ 
+                        },
+                        orderBy: {
+                            dob: 'desc'
+                        }
+                    }
+                },
+                where: {
+                    student: {
+                        some: {}
+                    }
+                },
+                orderBy: {
+                    crseName: 'asc',
+                },
+            }
+        },
+        where: {
+            course: {
+                some: {}
+            }
+        },
+        orderBy: {
+            deptName: 'asc',
+        },
     });
 };
 
